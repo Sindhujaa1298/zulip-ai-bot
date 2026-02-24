@@ -1,20 +1,27 @@
-# SmartBot — Installation Guide
+# Zulip AI Bot — Installation Guide
 
-This document explains how to deploy **SmartBot** against your own Zulip instance.
+## Dockerized OpenAI Integration for Zulip (Self-Hosted or Cloud)
 
-SmartBot is a standalone Dockerized Zulip bot.
-It connects to your Zulip server via the official API using a bot account.
+This guide explains how to deploy the **Zulip AI Bot**, a Docker-based **OpenAI integration for Zulip**.
+
+The bot connects using the official **Zulip Bot API** and runs independently of your Zulip server. It works with:
+
+* Zulip Cloud
+* Self-hosted Zulip
+* Docker-based Zulip deployments
+
+No server modification is required.
 
 ---
 
-## 1. Prerequisites
+# 1. Prerequisites
 
 You need:
 
-* A running Zulip server (cloud or self-hosted)
-* Admin access to create a bot user
-* Docker + Docker Compose installed
-* (Optional) OpenAI API key if SmartBot uses OpenAI
+* A running Zulip server (cloud or self-hosted Zulip)
+* Admin access to create a **Zulip Generic Bot**
+* Docker + Docker Compose
+* OpenAI API key (for AI responses)
 
 Verify Docker:
 
@@ -25,14 +32,14 @@ docker compose version
 
 ---
 
-## 2. Create a Zulip Bot
+# 2. Create a Zulip Bot (Required for Zulip AI Integration)
 
 In your Zulip web interface:
 
 1. Go to **Settings → Organization settings → Bots**
 2. Click **Add a new bot**
 3. Select **Generic bot**
-4. Choose a name (e.g., `SmartBot`)
+4. Name it (e.g., `Zulip AI Bot`)
 5. Create the bot
 
 After creation, copy:
@@ -40,57 +47,67 @@ After creation, copy:
 * **Bot email**
 * **Bot API key**
 
-Also note your Zulip server base URL, for example:
+Also record your Zulip server URL, for example:
 
 ```
 https://chat.example.com
 ```
 
-You will need all three values.
+These credentials allow the **Zulip AI bot** to authenticate via the Zulip API.
 
 ---
 
-## 3. Clone the Repository
+# 3. Clone the Zulip AI Bot Repository
 
 ```bash
-git clone https://github.com/pablopovar/smartbot.git
-cd smartbot
+git clone https://github.com/pablopovar/zulip-ai-bot.git
+cd zulip-ai-bot
 ```
+
+This repository contains:
+
+* Docker configuration
+* OpenAI integration logic
+* Self-hosted Zulip bot runtime
 
 ---
 
-## 4. Configure Environment Variables
+# 4. Configure Environment Variables
 
-Copy the example file:
+Copy the example configuration:
 
 ```bash
 cp env.example .env
 ```
 
-Edit `.env`:
+Edit the file:
 
 ```bash
 nano .env
 ```
 
-Set the required values:
+Set:
 
 ```
 ZULIP_SITE=https://chat.example.com
-ZULIP_EMAIL=smartbot-bot@chat.example.com
-ZULIP_API_KEY=your_bot_api_key_here
+ZULIP_EMAIL=your-bot@chat.example.com
+ZULIP_API_KEY=your_bot_api_key
 
-### Optional (if using OpenAI)
 OPENAI_API_KEY=sk-...
 ```
+
+Required for:
+
+* Zulip bot authentication
+* OpenAI integration
 
 Do not commit `.env`.
 
 ---
 
-## 5. Build and Run
+# 5. Build and Run the Dockerized Zulip AI Bot
 
-Build and start the container:
+Start the container:
 
 ```bash
 docker compose up -d --build
@@ -102,27 +119,45 @@ View logs:
 docker compose logs -f
 ```
 
-If correctly configured, the bot should connect to Zulip and begin processing events.
+If configured correctly, the Zulip AI bot will connect to your Zulip server and begin processing threaded chat events.
 
 ---
 
-## 6. Data Persistence
+# 6. Architecture Overview
 
-SmartBot stores state in `/data` inside the container.
+```
+Zulip Server  <->  Zulip Bot API  <->  Zulip AI Bot (Docker)  <->  OpenAI API
+```
 
-Docker Compose creates a named volume:
+* Runs as a standalone Docker container
+* Uses official Zulip API
+* Supports threaded-chat context
+* No Zulip server patching required
+* Suitable for self-hosted automation
+
+---
+
+# 7. Data Persistence
+
+The container stores optional runtime state in:
+
+```
+/data
+```
+
+Docker Compose creates:
 
 ```
 smartbot-data
 ```
 
-To inspect volumes:
+List volumes:
 
 ```bash
 docker volume ls
 ```
 
-To remove all state:
+Remove bot state:
 
 ```bash
 docker compose down -v
@@ -130,9 +165,20 @@ docker compose down -v
 
 ---
 
-## 7. Updating SmartBot
+# 8. Deploying Against Remote Zulip (Zulip Cloud or External Server)
 
-Pull the latest version:
+The Zulip AI integration does not need to run on the same host as Zulip.
+
+As long as:
+
+* `ZULIP_SITE` is reachable
+* The bot credentials are valid
+
+You can run the Dockerized Zulip bot on any server with network access.
+
+---
+
+# 9. Updating the Zulip AI Bot
 
 ```bash
 git pull
@@ -142,67 +188,60 @@ docker compose up -d --build
 
 ---
 
-## 8. Running Against a Remote Zulip (No Local Zulip Stack)
+# 10. Troubleshooting
 
-SmartBot does **not** need to run on the same host as Zulip.
-
-As long as:
-
-* `ZULIP_SITE` points to the public Zulip URL
-* The bot email + API key are valid
-
-SmartBot can run on any machine with network access to your Zulip server.
-
----
-
-## 9. Troubleshooting
-
-### Container starts but no logs
-
-Check container status:
+## Container running but no activity
 
 ```bash
 docker compose ps
+docker compose logs -f
 ```
 
-### Authentication errors
+## Zulip authentication errors
 
 Verify:
 
-* `ZULIP_SITE` is correct (must include https://)
-* Bot email is exact
-* API key matches the bot
+* `ZULIP_SITE` includes `https://`
+* Bot email matches exactly
+* API key matches the created Zulip bot
 
-### SSL issues (self-signed certs)
+## OpenAI errors
 
-If your Zulip server uses a self-signed certificate, ensure:
+Verify:
 
-* The certificate is trusted by the host
-* Or adjust Python SSL verification in the script (not recommended for production)
+* `OPENAI_API_KEY` is valid
+* Network access to OpenAI API is available
+
+## Self-signed SSL (Self-Hosted Zulip)
+
+Ensure:
+
+* The certificate is trusted by the Docker host
+* Or the container trust store includes your CA
 
 ---
 
-## 10. Security Notes
+# 11. Security Notes
 
 * Never commit `.env`
-* Rotate bot API keys if leaked
-* Restrict bot permissions if not required to post everywhere
+* Rotate Zulip bot API keys if exposed
+* Restrict bot permissions in Zulip if needed
+* Avoid embedding secrets in images
 
 ---
 
-## 11. Uninstall
+# 12. Uninstall
 
-Stop container:
+Stop the Dockerized Zulip AI bot:
 
 ```bash
 docker compose down
 ```
 
-Remove volumes:
+Remove persistent data:
 
 ```bash
 docker compose down -v
 ```
 
-Delete repository directory if desired.
-
+Delete the repository directory if desired.
