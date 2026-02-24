@@ -1,0 +1,19 @@
+services:
+  smartbot:
+    build: .
+    image: smartbot:latest
+    container_name: smartbot
+    env_file:
+      - .env
+#    restart: unless-stopped
+    volumes:
+      - smartbot_data:/data
+    # optional: quick health-ish check that the container can reach Zulip
+    # healthcheck:
+    #   test: ["CMD-SHELL", "python -c \"import os,requests; u=os.environ['ZULIP_SITE'].rstrip('/')+'/api/v1/server_settings'; print(requests.get(u,timeout=5).status_code)\" | grep -q 200"]
+    #   interval: 30s
+    #   timeout: 10s
+    #   retries: 3
+
+volumes:
+  smartbot_data:
